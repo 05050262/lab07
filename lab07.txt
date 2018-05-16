@@ -1,0 +1,26 @@
+#include "DHT.h"
+#include "Wire.h"
+#define dht_dpin 2
+#define DHTType DHT11
+
+const int SLAVE_ADDRESS = 1;
+DHT dht(dht_dpin,DHTType);
+
+void setup(){
+Wire.begin(SLAVE_ADDRESS);
+Wire.onRequest(a);
+delay(300);
+pinMode(4,OUTPUT);
+digitalWrite(4,1);
+dht.begin();
+delay(700); 
+}
+void loop(){
+}
+void a(){
+  float h = dht.readHumidity();
+  float d = dht.readTemperature();
+  Wire.write(h);
+  delay(1000);
+  Wire.write(d);
+}
